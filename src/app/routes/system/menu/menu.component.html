@@ -1,0 +1,97 @@
+<div class="d-flex s-container">
+  <div class="d-flex justify-content-center width-100">
+    <div class="d-flex">
+      <div class="s-left">
+        <div class="d-flex">
+          <button nz-button nzType="default" nzBlock (click)="onClickCreateMenu()">创建菜单</button>
+          <button nz-button nzType="primary" (click)="refresh()">
+            <i nz-icon nzType="sync"></i>
+          </button>
+        </div>
+        <nz-tree [nzData]="menuTreeNodes" nzShowLine (nzClick)="TreeOnClick($event)"></nz-tree>
+      </div>
+      <div class="s-right d-flex flex-column">
+        <div class="d-flex justify-content-between">
+          <div></div>
+          <div class="d-flex">
+            <button (click)="edit()" nz-button nzType="primary" nzBlock>保存</button>
+            <button (click)="delete()" nz-button nzType="danger" nzBlock>删除</button>
+          </div>
+        </div>
+        <div class="menu-info">
+          <div class="d-flex s-form-item">
+            <div class="s-label">菜单名称：</div>
+            <div class="s-value">
+              <input nz-input [(ngModel)]="menuSelectData.menu.title"/>
+            </div>
+          </div>
+          <div class="d-flex s-form-item">
+            <div class="s-label">上级菜单：</div>
+            <div class="s-value">
+              <nz-tree-select nzShowSearch style="width: 100%"
+                              [nzNodes]="_menuTreeNodes"
+                              [(ngModel)]="menuSelectData.menu.pid">
+              </nz-tree-select>
+            </div>
+          </div>
+          <div class="d-flex s-form-item">
+            <div class="s-label">地址：</div>
+            <div class="s-value">
+              <input nz-input [(ngModel)]="menuSelectData.menu.url"/>
+            </div>
+          </div>
+          <div class="d-flex s-form-item">
+            <div class="s-label">图标：</div>
+            <div class="s-value">
+              <input nz-input [(ngModel)]="menuSelectData.menu.icon"/>
+            </div>
+          </div>
+          <div class="d-flex s-form-item">
+            <div class="s-label">备注：</div>
+            <div class="s-value">
+              <textarea rows="4" nz-input [(ngModel)]="menuSelectData.menu.description"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nz-modal [(nzVisible)]="isMenuVisible" nzTitle="创建菜单" (nzOnCancel)="handleModalCancel()" (nzOnOk)="handleModalOk()">
+  <div>
+    <div class="d-flex" style="margin-bottom: 5px">
+      <div style="width: 85px;text-align: right;">菜单名称：</div>
+      <div style="width: 100%;">
+        <input nz-input [(ngModel)]="createMenuData_title" style="width: 100%"/>
+      </div>
+    </div>
+    <div class="d-flex" style="margin-bottom: 5px">
+      <div style="width: 85px;text-align: right;">上级菜单：</div>
+      <div style="width: 100%;">
+        <nz-tree-select nzShowSearch style="width: 100%"
+                        [nzNodes]="_menuTreeNodes"
+                        [(ngModel)]="createMenuData_pid">
+        </nz-tree-select>
+      </div>
+    </div>
+    <div class="d-flex" style="margin-bottom: 5px">
+      <div style="width: 85px;text-align: right;">地址：</div>
+      <div style="width: 100%;">
+        <input nz-input [(ngModel)]="createMenuData_url" style="width: 100%"/>
+      </div>
+    </div>
+    <div class="d-flex" style="margin-bottom: 5px">
+      <div style="width: 85px;text-align: right;">图标：</div>
+      <div style="width: 100%;">
+        <input nz-input [(ngModel)]="createMenuData_icon" style="width: 100%"/>
+      </div>
+    </div>
+    <div class="d-flex" style="margin-bottom: 5px">
+      <div style="width: 85px;text-align: right;">备注：</div>
+      <div style="width: 100%;">
+        <textarea rows="4" nz-input [(ngModel)]="createMenuData_description" style="width: 100%"></textarea>
+      </div>
+    </div>
+  </div>
+</nz-modal>

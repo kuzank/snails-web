@@ -1,0 +1,10 @@
+<div>
+  <sf #sf [schema]="schema" [formData]="formData" [layout]="layout" [autocomplete]="'off'"
+      button="none"
+      (formChange)="onFormChange($event)"
+      (formError)="onFormError($event)">
+  </sf>
+  <div class="d-flex justify-content-end">
+    <button (click)="submit()" [disabled]="!sf.valid" nz-button nzType="primary">保存</button>
+  </div>
+</div>

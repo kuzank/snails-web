@@ -1,0 +1,46 @@
+<div class="s-container d-flex flex-column">
+  <div class="s-tooltar d-flex justify-content-between">
+    <div class="d-flex">
+    </div>
+    <div style="padding: 4px 0;">
+      <button (click)="search()" nz-button nzType="default" nzShape="circle" nzSize="small"
+              nz-tooltip nzTooltipTitle="刷新" nzTooltipPlacement="bottom">
+        <i nz-icon nzType="search"></i>
+      </button>
+    </div>
+  </div>
+  <div class="s-content">
+    <nz-table #basicTable [nzData]="data" [nzFooter]="nzFooter"
+              nzBordered nzShowPagination="false" nzSize="small">
+      <thead>
+      <tr>
+        <th>名称</th>
+        <th>性别</th>
+        <th>手机</th>
+        <th>登陆时间</th>
+        <th>登陆设备</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of basicTable.data">
+        <td width="100px">{{ item.title }}</td>
+        <td width="60px">{{ item.gender }}</td>
+        <td width="150px">{{ item.phone }}</td>
+        <td width="200px">{{ item.loginTime }}</td>
+        <td>{{ item.userAgent }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #nzFooter>
+      <div class="d-flex justify-content-between">
+        <div style="padding-left: 4px">
+          <a (click)="search()" nz-tooltip nzTooltipTitle="刷新" nzTooltipPlacement="bottom">
+            <i nz-icon nzType="sync" [nzSpin]="dataOnLoading" nzTheme="outline"></i>
+          </a>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+

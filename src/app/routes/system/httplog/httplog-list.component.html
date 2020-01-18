@@ -1,0 +1,87 @@
+<div class="s-container d-flex flex-column">
+  <div class="s-tooltar d-flex justify-content-between">
+    <div class="d-flex">
+      <div class="d-flex" style="padding-right: 10px">
+        <span class="text-right" style="width: 60px;padding: 5px 0">用户：</span>
+        <nz-select [(ngModel)]="_searchPersonid" nzAllowClear (ngModelChange)="search()" style="width: 150px">
+          <nz-option [nzValue]="people.id" [nzLabel]="people.title" *ngFor="let people of personList"></nz-option>
+        </nz-select>
+      </div>
+      <div class="d-flex" style="padding-right: 10px">
+        <span class="text-right" style="width: 60px;padding: 5px 0">Mehtod：</span>
+        <nz-select [(ngModel)]="_searchMethod" nzAllowClear (ngModelChange)="search()" style="width: 90px">
+          <nz-option [nzValue]="people.id" [nzLabel]="people.title" *ngFor="let people of MethodList"></nz-option>
+        </nz-select>
+      </div>
+      <div class="d-flex" style="padding-right: 10px">
+        <span class="text-right" style="width: 60px;padding: 5px 0">URL：</span>
+        <input nz-input [(ngModel)]="_searchUrl" (keydown)="keydown($event)"/>
+      </div>
+      <div class="d-flex" style="padding-right: 10px">
+        <span class="text-right" style="width: 90px;padding: 5px 0">开始时间：</span>
+        <nz-date-picker [(ngModel)]="_searchStart" (ngModelChange)="search()"></nz-date-picker>
+      </div>
+      <div class="d-flex" style="padding-right: 10px">
+        <span class="text-right" style="width: 90px;padding: 5px 0">结束时间：</span>
+        <nz-date-picker [(ngModel)]="_searchEnd" (ngModelChange)="search()"></nz-date-picker>
+      </div>
+    </div>
+    <div class="d-flex" style="padding: 4px 0;">
+      <button (click)="reset()" nz-button nzType="default" nzShape="circle" nzSize="small"
+              nz-tooltip nzTooltipTitle="重置" nzTooltipPlacement="bottom">
+        <i nz-icon nzType="undo"></i>
+      </button>
+      <button (click)="search()" nz-button nzType="default" nzShape="circle" nzSize="small"
+              nz-tooltip nzTooltipTitle="刷新" nzTooltipPlacement="bottom">
+        <i nz-icon nzType="search"></i>
+      </button>
+    </div>
+  </div>
+  <div class="s-content">
+    <nz-table #basicTable [nzData]="data" [nzFooter]="nzFooter" [(nzPageSize)]="pageSize"
+              nzBordered nzShowPagination="false" nzSize="small">
+      <thead (nzSortChange)="sortChange($event)">
+      <tr>
+        <th nzShowSort nzSortKey="personid_sort">用户</th>
+        <th nzShowSort nzSortKey="method_sort">Method</th>
+        <th nzShowSort nzSortKey="url_sort">URL</th>
+        <th nzShowSort nzSortKey="elapsedtime_sort">经过时间</th>
+        <th nzShowSort nzSortKey="ipaddress_sort">IP地址</th>
+        <th nzShowSort nzSortKey="createtime_sort">请求时间</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of basicTable.data">
+        <td width="160px">{{ getPersonName(item.personid) }}</td>
+        <td width="80px">{{ item.method }}</td>
+        <td width="180px">{{ item.url }}</td>
+        <td width="180px">{{ item.elapsedtime }}</td>
+        <td width="180px">{{ item.ipaddress }}</td>
+        <td class="text-nowrap text-truncate" width="220px">{{ item.createtime }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #nzFooter>
+      <div class="d-flex justify-content-between">
+        <div style="padding-left: 4px">
+          <a (click)="search()" nz-tooltip nzTooltipTitle="刷新" nzTooltipPlacement="bottom">
+            <i nz-icon nzType="sync" [nzSpin]="dataOnLoading" nzTheme="outline"></i>
+          </a>
+        </div>
+        <div *ngIf="totalPages > 1">
+          <nz-pagination (nzPageIndexChange)="nzPageIndexChange($event)" [(nzPageIndex)]="pageNumber"
+                         [(nzPageSize)]="pageSize"
+                         [nzTotal]="totalNumber" [nzSize]="'small'"></nz-pagination>
+        </div>
+        <div>
+          <small style="padding-right: 10px">
+            {{ (pageNumber - 1) * pageSize + 1 }} ~ {{ totalPages == pageNumber ? totalNumber : pageNumber * pageSize }}
+          </small>
+          <small>共<code>{{totalNumber}}</code>条</small>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+

@@ -1,0 +1,97 @@
+<div class="s-container d-flex flex-column">
+  <div class="s-tooltar d-flex justify-content-between">
+    <div class="d-flex">
+      <div class="d-flex" style="padding-right: 15px">
+        <span class="text-right" style="width: 60px;padding: 5px 0">名称：</span>
+        <input nz-input [(ngModel)]="_searchTitle" (keydown)="keydown($event)"/>
+      </div>
+      <div class="d-flex" style="padding-right: 15px">
+        <span class="text-right" style="width: 60px;padding: 5px 0">手机：</span>
+        <input nz-input [(ngModel)]="_searchPhone" (keydown)="keydown($event)"/>
+      </div>
+      <div class="d-flex" style="padding-right: 15px">
+        <span class="text-right" style="width: 60px;padding: 5px 0">地址：</span>
+        <input nz-input [(ngModel)]="_searchAddress" (keydown)="keydown($event)"/>
+      </div>
+    </div>
+    <div style="padding: 4px 0;">
+      <button (click)="create()" nz-button nzType="default" nzShape="circle" nzSize="small"
+              nz-tooltip nzTooltipTitle="新建用户" nzTooltipPlacement="bottom">
+        <i nz-icon nzType="plus"></i>
+      </button>
+      <button (click)="reset()" nz-button nzType="default" nzShape="circle" nzSize="small"
+              nz-tooltip nzTooltipTitle="重置" nzTooltipPlacement="bottom">
+        <i nz-icon nzType="undo"></i>
+      </button>
+      <button (click)="search()" nz-button nzType="default" nzShape="circle" nzSize="small"
+              nz-tooltip nzTooltipTitle="刷新" nzTooltipPlacement="bottom">
+        <i nz-icon nzType="search"></i>
+      </button>
+    </div>
+  </div>
+  <div class="s-content">
+    <nz-table #basicTable [nzData]="data" [nzFooter]="nzFooter" [(nzPageSize)]="pageSize"
+              nzBordered nzShowPagination="false" nzSize="small">
+      <thead (nzSortChange)="sortChange($event)">
+      <tr>
+        <th nzShowSort nzSortKey="title_sort">名称</th>
+        <th nzShowSort nzSortKey="orgunit_sort">组织</th>
+        <th nzShowSort nzSortKey="gender_sort"
+            nzShowFilter [nzFilters]="genders" (nzFilterChange)="genderFilterChange($event)">性别
+        </th>
+        <th nzShowSort nzSortKey="birthdate_sort">出生日期</th>
+        <th>手机</th>
+        <th>邮件</th>
+        <th>身份证号码</th>
+        <th>地址</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of basicTable.data">
+        <td>{{ item.title }}</td>
+        <td>{{ getOrgunitName(item.orgunit) }}</td>
+        <td>{{ item.gender }}</td>
+        <td>{{ item.birthdate }}</td>
+        <td>{{ item.phone }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.idcard }}</td>
+        <td>{{ item.address }}</td>
+        <td width="60px">
+          <a (click)="edit(item)" style="padding-right: 8px"
+             nz-tooltip nzTooltipTitle="编辑" nzTooltipPlacement="bottom">
+            <i nz-icon nzType="edit" nzTheme="outline"></i>
+          </a>
+          <a (nzOnConfirm)="delete(item)"
+             nz-popconfirm nzPopconfirmTitle="确定删除用户?" nzPopconfirmPlacement="bottom"
+             nz-tooltip nzTooltipTitle="删除" nzTooltipPlacement="bottom">
+            <i nz-icon nzType="delete" nzTheme="outline"></i>
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #nzFooter>
+      <div class="d-flex justify-content-between">
+        <div style="padding-left: 4px">
+          <a (click)="search()" nz-tooltip nzTooltipTitle="刷新" nzTooltipPlacement="bottom">
+            <i nz-icon nzType="sync" [nzSpin]="dataOnLoading" nzTheme="outline"></i>
+          </a>
+        </div>
+        <div *ngIf="totalPages > 1">
+          <nz-pagination (nzPageIndexChange)="nzPageIndexChange($event)" [(nzPageIndex)]="pageNumber"
+                         [(nzPageSize)]="pageSize"
+                         [nzTotal]="totalNumber" [nzSize]="'small'"></nz-pagination>
+        </div>
+        <div>
+          <small style="padding-right: 10px">
+            {{ (pageNumber - 1) * pageSize + 1 }} ~ {{ totalPages == pageNumber ? totalNumber : pageNumber * pageSize }}
+          </small>
+          <small>共<code>{{totalNumber}}</code>条</small>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+
