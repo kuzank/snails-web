@@ -27,6 +27,7 @@ import { RoutesModule } from './routes/routes.module';
 import { LayoutModule } from './layout/layout.module';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { IconDefinition } from '@ant-design/icons-angular';
+import { RouterHelper } from '@core/helper/RouterHelper';
 
 const LANG = {
   abbr: 'zh',
@@ -75,6 +76,7 @@ const INTERCEPTOR_PROVIDES = [
   { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
 ];
+
 // #endregion
 
 export function StartupServiceFactory(startupService: StartupService) {
@@ -91,6 +93,8 @@ const APPINIT_PROVIDES = [
   },
 ];
 // #endregion
+
+const HELPER_PROVIDES = [RouterHelper];
 
 const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;
@@ -112,7 +116,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     ...GLOBAL_THIRD_MODULES,
     ...FORM_MODULES,
   ],
-  providers: [...LANG_PROVIDES, ...INTERCEPTOR_PROVIDES, ...I18NSERVICE_PROVIDES, ...APPINIT_PROVIDES,
+  providers: [...LANG_PROVIDES, ...INTERCEPTOR_PROVIDES, ...I18NSERVICE_PROVIDES, ...APPINIT_PROVIDES, ...HELPER_PROVIDES,
     { provide: NZ_ICONS, useValue: icons },
   ],
   bootstrap: [AppComponent],
