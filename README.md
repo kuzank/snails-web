@@ -44,7 +44,7 @@ docker ps -a
 ![](https://tva1.sinaimg.cn/large/006tNbRwgy1gay9bm9jpej31cq0u079f.jpg)
 
 首页
-![](https://tva1.sinaimg.cn/large/006tNbRwgy1gay9d1y1o7j31cc0u07wh.jpg)
+![](https://tva1.sinaimg.cn/large/006tNbRwgy1gb31ak9yfqj31h20u047a.jpg)
 
 用户管理
 ![](https://tva1.sinaimg.cn/large/006tNbRwgy1gay9drj5xjj31ck0u00y9.jpg)
