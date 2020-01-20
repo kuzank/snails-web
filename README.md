@@ -5,6 +5,8 @@
 - [snails-web 前端](https://gitee.com/kuzan/snails-web)：Angular + Ng-Zorro + Ng-Alain
 - [snails-api 后台](https://gitee.com/kuzan/snails-api)：Sprint-Boot + JPA + lombok + Java8 + Mysql
 
+![](https://tva1.sinaimg.cn/large/006tNbRwgy1gb31ak9yfqj31h20u047a.jpg)
+
 ## 开发环境要求
 - [Node](https://nodejs.org/zh-cn/)
 - [yarn](https://yarn.bootcss.com/)
