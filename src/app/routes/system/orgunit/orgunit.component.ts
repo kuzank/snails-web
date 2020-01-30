@@ -17,7 +17,7 @@ export class OrgunitComponent implements OnInit {
   orgunitTreeNodes: NzTreeNode[] = [];
   _orgunitTreeNodes: NzTreeNode[] = [];
 
-  // 点击组织后，根据组织ID获取的组织信息
+  // 点击树形菜单组织后，保存被点击的组织信息
   orgunitSelectData = {
     personList: [],
     orgunit: {

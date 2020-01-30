@@ -59,39 +59,37 @@
 </div>
 
 <nz-modal [(nzVisible)]="isMenuVisible" nzTitle="创建菜单" (nzOnCancel)="handleModalCancel()" (nzOnOk)="handleModalOk()">
-  <div>
-    <div class="d-flex" style="margin-bottom: 5px">
-      <div style="width: 85px;text-align: right;">菜单名称：</div>
-      <div style="width: 100%;">
-        <input nz-input [(ngModel)]="createMenuData_title" style="width: 100%"/>
-      </div>
+  <div class="d-flex create-item">
+    <div class="label">菜单名称：</div>
+    <div class="width-100">
+      <input [(ngModel)]="createMenuData_title" nz-input/>
     </div>
-    <div class="d-flex" style="margin-bottom: 5px">
-      <div style="width: 85px;text-align: right;">上级菜单：</div>
-      <div style="width: 100%;">
-        <nz-tree-select nzShowSearch style="width: 100%"
-                        [nzNodes]="_menuTreeNodes"
-                        [(ngModel)]="createMenuData_pid">
-        </nz-tree-select>
-      </div>
+  </div>
+  <div class="d-flex create-item">
+    <div class="label">上级菜单：</div>
+    <div class="width-100">
+      <nz-tree-select [(ngModel)]="createMenuData_pid" [nzNodes]="_menuTreeNodes"
+                      class="width-100"
+                      nzShowSearch>
+      </nz-tree-select>
     </div>
-    <div class="d-flex" style="margin-bottom: 5px">
-      <div style="width: 85px;text-align: right;">地址：</div>
-      <div style="width: 100%;">
-        <input nz-input [(ngModel)]="createMenuData_url" style="width: 100%"/>
-      </div>
+  </div>
+  <div class="d-flex create-item">
+    <div class="label">地址：</div>
+    <div class="width-100">
+      <input [(ngModel)]="createMenuData_url" nz-input/>
     </div>
-    <div class="d-flex" style="margin-bottom: 5px">
-      <div style="width: 85px;text-align: right;">图标：</div>
-      <div style="width: 100%;">
-        <input nz-input [(ngModel)]="createMenuData_icon" style="width: 100%"/>
-      </div>
+  </div>
+  <div class="d-flex create-item">
+    <div class="label">图标：</div>
+    <div class="width-100">
+      <input [(ngModel)]="createMenuData_icon" nz-input/>
     </div>
-    <div class="d-flex" style="margin-bottom: 5px">
-      <div style="width: 85px;text-align: right;">备注：</div>
-      <div style="width: 100%;">
-        <textarea rows="4" nz-input [(ngModel)]="createMenuData_description" style="width: 100%"></textarea>
-      </div>
+  </div>
+  <div class="d-flex create-item">
+    <div class="label">备注：</div>
+    <div class="width-100">
+      <textarea [(ngModel)]="createMenuData_description" nz-input rows="4"></textarea>
     </div>
   </div>
 </nz-modal>

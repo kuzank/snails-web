@@ -17,7 +17,7 @@ export class MenuComponent implements OnInit {
   menuTreeNodes: NzTreeNode[] = [];
   _menuTreeNodes: NzTreeNode[] = [];
 
-  // 点击组织后，根据组织ID获取的组织信息
+  // 点击树形菜单后，保存被点击的菜单信息
   menuSelectData = {
     personList: [],
     menu: {
@@ -99,11 +99,11 @@ export class MenuComponent implements OnInit {
 
   edit() {
     if (!this.menuSelectData.menu.id) {
-      this.message.error('请选择组织！');
+      this.message.error('请选择菜单！');
       return;
     }
     if (!this.menuSelectData.menu.title) {
-      this.message.error('请填写组织名称！');
+      this.message.error('请填写菜单名称！');
       return;
     }
 
@@ -129,7 +129,7 @@ export class MenuComponent implements OnInit {
       }, error => {
       });
     } else {
-      this.message.error('请选择组织！');
+      this.message.error('请选择菜单！');
     }
   }
 
@@ -155,7 +155,7 @@ export class MenuComponent implements OnInit {
       }, error => {
       });
     } else {
-      this.message.warning('请填写完整组织信息！');
+      this.message.warning('请填写完整菜单信息！');
     }
   }
 

@@ -1,20 +1,20 @@
 <div class="s-container d-flex flex-column">
   <div class="s-tooltar d-flex justify-content-between">
-    <div class="d-flex">
-      <div class="d-flex" style="padding-right: 15px">
-        <span class="text-right" style="width: 60px;padding: 5px 0">名称：</span>
+    <div class="d-flex s-search">
+      <div class="d-flex search-item">
+        <span class="text-right s-lable">名称：</span>
         <input nz-input [(ngModel)]="_searchTitle" (keydown)="keydown($event)"/>
       </div>
-      <div class="d-flex" style="padding-right: 15px">
-        <span class="text-right" style="width: 60px;padding: 5px 0">手机：</span>
+      <div class="d-flex search-item">
+        <span class="text-right s-lable">手机：</span>
         <input nz-input [(ngModel)]="_searchPhone" (keydown)="keydown($event)"/>
       </div>
-      <div class="d-flex" style="padding-right: 15px">
-        <span class="text-right" style="width: 60px;padding: 5px 0">地址：</span>
+      <div class="d-flex search-item">
+        <span class="text-right s-lable">地址：</span>
         <input nz-input [(ngModel)]="_searchAddress" (keydown)="keydown($event)"/>
       </div>
     </div>
-    <div style="padding: 4px 0;">
+    <div class="d-flex s-button">
       <button (click)="create()" nz-button nzType="default" nzShape="circle" nzSize="small"
               nz-tooltip nzTooltipTitle="新建用户" nzTooltipPlacement="bottom">
         <i nz-icon nzType="plus"></i>
