@@ -1,0 +1,28 @@
+<div class="d-flex s-container">
+  <div class="width-40">
+    <nz-tree [nzData]="permissionTreeNode"
+             [nzExpandAll]="'true'"
+             [nzTreeTemplate]="nzTreeTemplate1"
+             nzMultiple>
+    </nz-tree>
+    <ng-template #nzTreeTemplate1 let-node>
+      <span (click)="expandedNode(node,$event)" [style.color]="node.key == selectTargetId ? '#ff4d4f' : ''" class="point">
+        <i [nzType]="node.icon" nz-icon nzTheme="outline" style="padding-right: 5px"></i>
+        <span style="padding-right: 8px">{{ node.title }}</span>
+      </span>
+    </ng-template>
+  </div>
+  <div class="width-60">
+    <nz-tree [nzData]="menuTreeNodes"
+             [nzExpandAll]="'true'"
+             [nzTreeTemplate]="nzTreeTemplate2"
+             nzMultiple>
+    </nz-tree>
+    <ng-template #nzTreeTemplate2 let-node>
+      <span class="point">
+        <i [nzType]="node.icon" nz-icon nzTheme="outline" style="padding-right: 5px"></i>
+        <span style="padding-right: 8px">{{ node.title }}</span>
+      </span>
+    </ng-template>
+  </div>
+</div>

@@ -6,7 +6,6 @@ import { ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService } from '@d
 import { ACLService } from '@delon/acl';
 import { TranslateService } from '@ngx-translate/core';
 import { I18NService } from '../i18n/i18n.service';
-
 import { NzIconService } from 'ng-zorro-antd';
 import { ICONS_AUTO } from '../../../style-icons-auto';
 import { ICONS } from '../../../style-icons';
@@ -46,7 +45,7 @@ export class StartupService {
     return new Promise(resolve => {
       zip(
         this.httpClient.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`),
-        this.httpClient.get('/menupermission/list'),
+        this.httpClient.get('/menu/get'),
       ).pipe(
         // 接收其他拦截器后产生的异常消息
         catchError(([langData, menuData]) => {
@@ -140,10 +139,6 @@ export class StartupService {
               {
                 'text': '菜单管理',
                 'link': '/system/menu',
-              },
-              {
-                'text': '菜单权限',
-                'link': '/system/menu-permission',
               },
               {
                 'text': '在线用户',

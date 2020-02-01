@@ -5,6 +5,7 @@ import { HttplogListComponent } from './httplog/httplog-list.component';
 import { ExceptioListComponent } from './exceptio/exceptio-list.component';
 import { OrgunitComponent } from './orgunit/orgunit.component';
 import { MenuComponent } from './menu/menu.component';
+import { MenuPermissionViewComponent } from './menu/permission-view/menu-permission-view.component';
 
 const COMPONENTS = [
   ExceptioListComponent,
@@ -13,7 +14,9 @@ const COMPONENTS = [
   MenuComponent,
 ];
 
-const COMPONENTS_NOROUNT = [];
+const COMPONENTS_NOROUNT = [
+  MenuPermissionViewComponent,
+];
 
 @NgModule({
   imports: [SharedModule, SystemRoutingModule],
