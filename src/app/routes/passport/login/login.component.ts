@@ -129,6 +129,13 @@ export class UserLoginComponent implements OnDestroy {
       if (status === 0) {
         // 清空路由复用信息
         this.reuseTabService.clear();
+        let user = {
+          name: data['title'] || '',
+          avatar: './assets/tmp/img/avatar.jpg',
+          email: data['email'] || '754109648@qq.com',
+        };
+        // 用户信息：包括姓名、头像、邮箱地址
+        this.settingsService.setUser(user);
         // 设置用户Token信息
         this.tokenService.set(data);
         // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响

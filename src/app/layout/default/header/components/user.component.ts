@@ -49,7 +49,8 @@ export class HeaderUserComponent {
   }
 
   logout() {
-    this.httpClient.get('/person/logout').subscribe(res => console.log(res));
+    this.httpClient.get('/person/logout').subscribe(res => {
+    });
     this.tokenService.clear();
     this.router.navigateByUrl(this.tokenService.login_url!);
   }
