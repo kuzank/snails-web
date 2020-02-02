@@ -11,7 +11,7 @@
         <nz-tree (nzClick)="menuNodeOnClick($event)" [nzData]="menuTreeNodes" [nzTreeTemplate]="menuTreeNodeTemplate"
                  nzShowLine>
           <ng-template #menuTreeNodeTemplate let-node>
-            <span [style.background]="menuSelectData.menu.id == node.id ? '#ff4d4f' : ''" class="point">
+            <span [style.color]="menuSelectData.menu.id == node.key ? '#ff4d4f' : ''" class="point">
               <i [nzType]="node.icon" nz-icon nzTheme="outline"
                  style="padding-right: 5px"></i>
               <span style="padding-right: 8px">{{ node.title }}</span>
@@ -159,6 +159,9 @@
     <div class="label">图标：</div>
     <div class="width-100">
       <input [(ngModel)]="createMenuData_icon" nz-input/>
+      <small style="padding: 4px 0">
+        <a href="https://ng.ant.design/components/icon/zh" target="_blank">图标地址：https://ng.ant.design/components/icon/zh</a>
+      </small>
     </div>
   </div>
   <div class="d-flex s-form-item">

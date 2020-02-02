@@ -69,6 +69,7 @@ export class MenuComponent implements OnInit {
 
   menuNodeOnClick(event: NzFormatEmitEvent): void {
     let data = event.node.origin;
+    this.menuSelectData.menu.id = data.key;
 
     if (!event.node.isLeaf && event.node.isExpanded == false) {
       event.node.isExpanded = true;
