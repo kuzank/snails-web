@@ -61,7 +61,7 @@ docker run -d --name snails-web -p 4200:4200 snails-web
 ![](https://gitee.com/kuzan/Resource/raw/master/Snails/picture/b_dashboard.jpg)
 
 ### 3、用户管理
-![](https://gitee.com/kuzan/Resource/raw/master/Snails/picture/b_dashboard.jpg)
+![](https://gitee.com/kuzan/Resource/raw/master/Snails/picture/c_userManage.jpg)
 
 ### 4、组织管理
 ![](https://gitee.com/kuzan/Resource/raw/master/Snails/picture/d_orgunitManage.jpg)
