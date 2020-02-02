@@ -1,18 +1,24 @@
-<h1 align="center"><a href="https://gitee.com/kuzan/snails-web">snails-web</a></h1>
+# snails-web
+![](https://gitee.com/kuzan/Resource/raw/master/Snails/picture/b_dashboard.jpg)
+
 一个基于 Spring-Boot + Angular + Ng-Zorro 前后端分离项目的简单实现
 
-- [snails 框架](https://gitee.com/kuzan/snails)：编程入门，新手礼赞
-- [snails-web 前端](https://gitee.com/kuzan/snails-web)：Angular + Ng-Zorro + Ng-Alain
-- [snails-api 后台](https://gitee.com/kuzan/snails-api)：Sprint-Boot + JPA + lombok + Java8 + Mysql
+- `Snails 框架`：编程入门，新手礼赞
+- `snails-web 前端`：[Angular](https://angular.cn/) + [Ng-Zorro](https://ng.ant.design/docs/introduce/zh) + [Ng-Alain](https://ng-alain.com)
+- `snails-api 后台`：[SpringBoot](https://spring.io/projects/spring-boot) + [JPA ](https://spring.io/guides/gs/accessing-data-jpa/)+ [lombok](https://projectlombok.org/) + [Java8](https://zhuanlan.zhihu.com/java8) + Mysql
 
-![](https://tva1.sinaimg.cn/large/006tNbRwgy1gb31ak9yfqj31h20u047a.jpg)
+|      `框架源码`     | Gitee                                                        | GitHub                                                       |
+| -------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **Snails** 框架      | [https://gitee.com/kuzan/snails](https://gitee.com/kuzan/snails) | [https://github.com/danxiaogui/snails](https://github.com/danxiaogui/snails) |
+| **Snails-web** 前端  | [https://gitee.com/kuzan/snails-web](https://gitee.com/kuzan/snails-web) | [https://github.com/danxiaogui/snails-web](https://github.com/danxiaogui/snails-web) |
+| **Snails-api**  后台 | [https://gitee.com/kuzan/snails-api](https://gitee.com/kuzan/snails-api) | [https://github.com/danxiaogui/snails-api](https://github.com/danxiaogui/snails-api) |
+
 
 ## 开发环境要求
 - [Node](https://nodejs.org/zh-cn/)
 - [yarn](https://yarn.bootcss.com/)
-- [启动 snails-api 后台服务](https://gitee.com/kuzan/snails-api)
-
-项目数据来源于[snails-api](https://gitee.com/kuzan/snails-api)，因此需要获取并启动此工程
+- **启动 snails-api 后台服务**
+本前端项目 `snails-web` 的 `REST API` 数据来源于`snails-api`，因此需要获取并启动此工程
 
 ## 获取项目
 
@@ -22,55 +28,68 @@ cd snails-web
 yarn   # yarn 安装项目的依赖，或者使用 npm install 也可
 ```
 
-### 1.3 启动项目 - 方法1
+### 启动项目 - 方法一
 ```shell
 npm run start
 ```
 
-### 1.3 启动项目 - 方法2
-前提：系统已安装 docker
+### 启动项目 - 方法二
+前提：系统已安装 `docker`
 ```shell
 # 打包为 docker 镜像
 docker build -t snails-web .
 # 启动程序
 docker run -d --name snails-web -p 4200:4200 snails-web
-# 查看运行中的 docker 实例
-docker ps -a 
 ```
 
-浏览器访问 http://localhost:4200/
+## 系统截图 
+本前端项目 `snails-web` 的 `REST API` 数据来源于`snails-api`，因此需要获取并启动此工程
+> 浏览器访问 localhost:4200
 
-确保[snails-api](https://gitee.com/kuzan/snails-api)服务正常启动，输入 【账号】kuzank 【密码】123456
+### 1、登陆页面
 
-登陆页面
-![](https://tva1.sinaimg.cn/large/006tNbRwgy1gay9bm9jpej31cq0u079f.jpg)
+>  系统默认用户、账号、密码信息，数据在 **snails-api** 启动后初始化到数据库中，源码在 snails-api/src/main/java/com/kuzank/snails/init/InitPerson.java
 
-首页
-![](https://tva1.sinaimg.cn/large/006tNbRwgy1gb31ak9yfqj31h20u047a.jpg)
+| 用户名     | 账号       | 密码   | 备注                             |
+| ---------- | ---------- | ------ | -------------------------------- |
+| kuzank     | kuzank     | 123456 | 所属组织：Snails Studio > 技术部 |
+| danxiaogui | danxiaogui | 123456 | 所属组织：Snails Studio > 财务部 |
 
-用户管理
-![](https://tva1.sinaimg.cn/large/006tNbRwgy1gay9drj5xjj31ck0u00y9.jpg)
+![](https://gitee.com/kuzan/Resource/raw/master/Snails/picture/a_login.jpg)
 
-组织管理
-![](https://tva1.sinaimg.cn/large/006tNbRwgy1gay9e8m16nj31cn0u0grh.jpg)
+### 2、首页
+![](https://gitee.com/kuzan/Resource/raw/master/Snails/picture/b_dashboard.jpg)
 
-菜单管理
-![](https://tva1.sinaimg.cn/large/006tNbRwgy1gay9etun63j31cr0u07aq.jpg)
+### 3、用户管理
+![](https://gitee.com/kuzan/Resource/raw/master/Snails/picture/b_dashboard.jpg)
 
-在线用户
-![](https://tva1.sinaimg.cn/large/006tNbRwgy1gay9fj317qj31cu0u00yf.jpg)
+### 4、组织管理
+![](https://gitee.com/kuzan/Resource/raw/master/Snails/picture/d_orgunitManage.jpg)
 
-登陆日志
-![](https://tva1.sinaimg.cn/large/006tNbRwgy1gay9g2nz92j31cn0u017t.jpg)
+### 5、菜单管理
+> 菜单配置及菜单权限配置
 
-http请求
-![](https://tva1.sinaimg.cn/large/006tNbRwgy1gay9gmcmiaj31cp0u0n8p.jpg)
+![](https://gitee.com/kuzan/Resource/raw/master/Snails/picture/e_menuManage.jpg)
 
-系统异常
-![](https://tva1.sinaimg.cn/large/006tNbRwgy1gay9h9q1vzj31cm0u0qa5.jpg)
+> 用户菜单权限预览
 
-G2图表
-![](https://tva1.sinaimg.cn/large/006tNbRwgy1gay9hwyfesj31ct0u0q9m.jpg)
+![](https://gitee.com/kuzan/Resource/raw/master/Snails/picture/f_menuPermissionPreview.jpg)
+
+### 6、在线用户
+![](https://gitee.com/kuzan/Resource/raw/master/Snails/picture/g_onlineUser.jpg)
+
+### 7、登陆日志
+![](https://gitee.com/kuzan/Resource/raw/master/Snails/picture/h_loginLog.jpg)
+
+### 8、http请求
+![](https://gitee.com/kuzan/Resource/raw/master/Snails/picture/i_httpRequest.jpg)
+
+### 9、系统异常
+![](https://gitee.com/kuzan/Resource/raw/master/Snails/picture/j_systemException.jpg)
+
+### 10、G2图表
+![](https://gitee.com/kuzan/Resource/raw/master/Snails/picture/k_g2Custom.jpg)
+
 
 ## 学习资源
 - [Angular快速上手](https://angular.cn/guide/quickstart)
