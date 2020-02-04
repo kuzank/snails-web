@@ -28,6 +28,7 @@ export class MenuComponent implements OnInit {
       url: null,
       icon: null,
       inherit: 'no',
+      sortt: '',
       description: '',
     },
     permission: [],
@@ -50,6 +51,7 @@ export class MenuComponent implements OnInit {
   createMenuData_url = null;
   createMenuData_icon = null;
   createMenuData_inherit = 'no';
+  createMenuData_sortt = '';
   createMenuData_description = '';
 
   nodeOptions: ArrayServiceArrToTreeNodeOptions = { parentIdMapName: 'pid' };
@@ -114,6 +116,7 @@ export class MenuComponent implements OnInit {
         url: this.createMenuData_url,
         icon: this.createMenuData_icon,
         inherit: this.createMenuData_inherit,
+        sortt: this.createMenuData_sortt,
         description: this.createMenuData_description,
       };
       this.dataOnLoading = true;
@@ -234,6 +237,7 @@ export class MenuComponent implements OnInit {
         url: null,
         icon: null,
         inherit: 'no',
+        sortt: '',
         description: '',
       },
       permission: [],
@@ -246,6 +250,7 @@ export class MenuComponent implements OnInit {
     this.createMenuData_url = null;
     this.createMenuData_icon = null;
     this.createMenuData_inherit = 'no';
+    this.createMenuData_sortt = '';
     this.createMenuData_description = '';
     this.isMenuVisible = true;
   }
