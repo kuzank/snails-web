@@ -15,6 +15,7 @@ import { MenuPermissionViewComponent } from './permission-view/menu-permission-v
 })
 export class MenuComponent implements OnInit {
 
+  dataOnLoading = false;
   menuTreeNodes: NzTreeNode[] = [];
   _menuTreeNodes: NzTreeNode[] = [];
 
@@ -76,9 +77,10 @@ export class MenuComponent implements OnInit {
       this.cdr.detectChanges();
     }
 
+    this.dataOnLoading = true;
     this.http.get(`/menu/configDetail/${data.id}`).subscribe((res: any) => {
 
-      this.message.success('数据加载成功');
+      this.dataOnLoading = false;
       if (res.status === 0) {
 
         this.menuSelectData = res.data;
@@ -114,7 +116,9 @@ export class MenuComponent implements OnInit {
         inherit: this.createMenuData_inherit,
         description: this.createMenuData_description,
       };
+      this.dataOnLoading = true;
       this.http.post('/menu/create', data, {}).subscribe((res: any) => {
+        this.dataOnLoading = false;
         if (res.status === 0) {
           this.message.success('创建成功');
           this.refresh();
@@ -142,8 +146,10 @@ export class MenuComponent implements OnInit {
       return;
     }
 
+    this.dataOnLoading = true;
     let data = this.menuSelectData.menu;
     this.http.post('/menu/edit', data, {}).subscribe((res: any) => {
+      this.dataOnLoading = false;
       if (res.status === 0) {
         this.message.success('修改成功');
         this.initMenu();
@@ -154,7 +160,9 @@ export class MenuComponent implements OnInit {
 
   delete() {
     if (this.menuSelectData.menu.id) {
+      this.dataOnLoading = true;
       this.http.get(`/menu/delete/${this.menuSelectData.menu.id}`).subscribe((res: any) => {
+        this.dataOnLoading = false;
         if (res.status === 0) {
           this.emptyTreeSelect();
           this.initMenu();
@@ -176,7 +184,9 @@ export class MenuComponent implements OnInit {
 
     let resource = this.menuSelectData.menu.id;
     let target = node.key;
+    this.dataOnLoading = true;
     this.http.get(`/permission/cancel/${resource}/${target}`).subscribe((res: any) => {
+      this.dataOnLoading = false;
       if (res.status === 0) {
         node.origin['permission'] = false;
         this.cdr.detectChanges();
@@ -194,7 +204,9 @@ export class MenuComponent implements OnInit {
 
     let resource = this.menuSelectData.menu.id;
     let target = node.key;
+    this.dataOnLoading = true;
     this.http.get(`/permission/allow/${resource}/${target}`).subscribe((res: any) => {
+      this.dataOnLoading = false;
       if (res.status === 0) {
         node.origin['permission'] = true;
         this.cdr.detectChanges();
@@ -255,9 +267,10 @@ export class MenuComponent implements OnInit {
 
   private initMenu() {
 
+    this.dataOnLoading = true;
     this.http.get('/menu/configData').subscribe((res: any) => {
 
-      this.message.success('数据加载成功');
+      this.dataOnLoading = false;
 
       let menudata: NzTreeNode[] = [];
       let _menudata: NzTreeNode[] = [];
@@ -294,7 +307,6 @@ export class MenuComponent implements OnInit {
     };
 
     this.http.post('/person/find', {}, param).subscribe((res: any) => {
-      this.message.success('数据加载成功');
       if (res.status === 0) {
         let d = res.data.content as any[];
         this.personList = d;

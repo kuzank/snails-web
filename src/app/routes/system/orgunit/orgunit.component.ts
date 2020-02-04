@@ -13,6 +13,7 @@ import { NzTreeNode } from 'ng-zorro-antd/core';
 })
 export class OrgunitComponent implements OnInit {
 
+  dataOnLoading = false;
   orgunitTreeNodes: NzTreeNode[] = [];
   _orgunitTreeNodes: NzTreeNode[] = [];
 
@@ -54,7 +55,9 @@ export class OrgunitComponent implements OnInit {
 
   TreeOnClick(event: NzFormatEmitEvent): void {
     let data = event.node.origin;
+    this.dataOnLoading = true;
     this.http.get(`/orgunit/detail/${data.id}`).subscribe((res: any) => {
+      this.dataOnLoading = false;
       if (res.status === 0) {
         this.orgunitSelectData = res.data;
         let personList = res.data.personList as any[];
@@ -69,10 +72,89 @@ export class OrgunitComponent implements OnInit {
     });
   }
 
+  edit() {
+    if (!this.orgunitSelectData.orgunit.id) {
+      this.message.error('请选择组织！');
+      return;
+    }
+    if (!this.orgunitSelectData.orgunit.title) {
+      this.message.error('请填写组织名称！');
+      return;
+    }
+
+    let data = this.orgunitSelectData.orgunit;
+    let param = {
+      ids: this.orgunitSelectData.peoples ? this.orgunitSelectData.peoples.toString() : '',
+    };
+    this.dataOnLoading = true;
+    this.http.post('/orgunit/edit', data, param).subscribe((res: any) => {
+      this.dataOnLoading = false;
+      if (res.status === 0) {
+        this.message.success('修改成功');
+        this.initOrgunit();
+      }
+    }, error => {
+    });
+  }
+
+  refresh() {
+    this.emptyTreeSelect();
+    this.initOrgunit();
+  }
+
+  delete() {
+    if (this.orgunitSelectData.orgunit.id) {
+      this.dataOnLoading = true;
+      this.http.get(`/orgunit/delete/${this.orgunitSelectData.orgunit.id}`).subscribe((res: any) => {
+        this.dataOnLoading = false;
+        if (res.status === 0) {
+          this.emptyTreeSelect();
+          this.initOrgunit();
+          this.message.success('删除成功');
+          this.cdr.detectChanges();
+        }
+      }, error => {
+      });
+    } else {
+      this.message.error('请选择组织！');
+    }
+  }
+
+  handleModalOk() {
+    if (this.createOrgunitData_title) {
+      let data = {
+        title: this.createOrgunitData_title,
+        charge: this.createOrgunitData_charge,
+        pid: this.createOrgunitData_pid,
+        description: this.createOrgunitData_description,
+      };
+      let param = {
+        ids: this.createOrgunitData_peoples ? this.createOrgunitData_peoples.toString() : '',
+      };
+      this.dataOnLoading = true;
+      this.http.post('/orgunit/create', data, param).subscribe((res: any) => {
+        this.dataOnLoading = false;
+        if (res.status === 0) {
+          this.message.success('创建成功');
+          this.refresh();
+          this.isOrgunitVisible = false;
+        }
+      }, error => {
+      });
+    } else {
+      this.message.warning('请填写完整组织信息！');
+    }
+  }
+
+  handleModalCancel() {
+    this.isOrgunitVisible = false;
+  }
+
   private initOrgunit() {
+    this.dataOnLoading = true;
     let option: ArrayServiceArrToTreeNodeOptions = { parentIdMapName: 'pid' };
     this.http.get('/orgunit/list').subscribe((res: any) => {
-      this.message.success('数据加载成功');
+      this.dataOnLoading = false;
       let data: NzTreeNode[] = [];
       let _data: NzTreeNode[] = [];
       if (res.status === 0) {
@@ -93,78 +175,6 @@ export class OrgunitComponent implements OnInit {
       this.cdr.detectChanges();
     }, error => {
     });
-  }
-
-  refresh() {
-    this.emptyTreeSelect();
-    this.initOrgunit();
-  }
-
-  edit() {
-    if (!this.orgunitSelectData.orgunit.id) {
-      this.message.error('请选择组织！');
-      return;
-    }
-    if (!this.orgunitSelectData.orgunit.title) {
-      this.message.error('请填写组织名称！');
-      return;
-    }
-
-    let data = this.orgunitSelectData.orgunit;
-    let param = {
-      ids: this.orgunitSelectData.peoples ? this.orgunitSelectData.peoples.toString() : '',
-    };
-    this.http.post('/orgunit/edit', data, param).subscribe((res: any) => {
-      if (res.status === 0) {
-        this.message.success('修改成功');
-        this.initOrgunit();
-      }
-    }, error => {
-    });
-  }
-
-  delete() {
-    if (this.orgunitSelectData.orgunit.id) {
-      this.http.get(`/orgunit/delete/${this.orgunitSelectData.orgunit.id}`).subscribe((res: any) => {
-        if (res.status === 0) {
-          this.emptyTreeSelect();
-          this.initOrgunit();
-          this.message.success('删除成功');
-          this.cdr.detectChanges();
-        }
-      }, error => {
-      });
-    } else {
-      this.message.error('请选择组织！');
-    }
-  }
-
-  handleModalCancel() {
-    this.isOrgunitVisible = false;
-  }
-
-  handleModalOk() {
-    if (this.createOrgunitData_title) {
-      let data = {
-        title: this.createOrgunitData_title,
-        charge: this.createOrgunitData_charge,
-        pid: this.createOrgunitData_pid,
-        description: this.createOrgunitData_description,
-      };
-      let param = {
-        ids: this.createOrgunitData_peoples ? this.createOrgunitData_peoples.toString() : '',
-      };
-      this.http.post('/orgunit/create', data, param).subscribe((res: any) => {
-        if (res.status === 0) {
-          this.message.success('创建成功');
-          this.refresh();
-          this.isOrgunitVisible = false;
-        }
-      }, error => {
-      });
-    } else {
-      this.message.warning('请填写完整组织信息！');
-    }
   }
 
   emptyTreeSelect() {
@@ -197,7 +207,6 @@ export class OrgunitComponent implements OnInit {
     };
 
     this.http.post('/person/find', {}, param).subscribe((res: any) => {
-      this.message.success('数据加载成功');
       if (res.status === 0) {
         let d = res.data.content as any[];
         this.personList = d;

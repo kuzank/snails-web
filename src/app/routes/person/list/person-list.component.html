@@ -30,7 +30,7 @@
     </div>
   </div>
   <div class="s-content">
-    <nz-table #basicTable [nzData]="data" [nzFooter]="nzFooter" [(nzPageSize)]="pageSize"
+    <nz-table #basicTable [(nzPageSize)]="pageSize" [nzData]="data" [nzFooter]="nzFooter" [nzLoading]="dataOnLoading"
               nzBordered nzShowPagination="false" nzSize="small">
       <thead (nzSortChange)="sortChange($event)">
       <tr>

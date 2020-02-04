@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { _HttpClient } from '@delon/theme';
-import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'snails-system-httplog-list',
@@ -29,7 +28,6 @@ export class HttplogListComponent implements OnInit {
 
 
   constructor(private http: _HttpClient,
-              private message: NzMessageService,
               private cdr: ChangeDetectorRef) {
     this.initPersonList();
   }
@@ -58,7 +56,6 @@ export class HttplogListComponent implements OnInit {
 
     this.http.post('/httpLog/find', body, param).subscribe((res: any) => {
       this.dataOnLoading = false;
-      this.message.success('数据加载成功');
 
       if (res.status === 0) {
         this.data = res.data.content as any[];
@@ -113,7 +110,6 @@ export class HttplogListComponent implements OnInit {
     };
 
     this.http.post('/person/find', {}, param).subscribe((res: any) => {
-      this.message.success('数据加载成功');
 
       if (res.status === 0) {
         let d = res.data.content as any[];

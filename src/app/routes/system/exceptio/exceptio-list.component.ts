@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { _HttpClient } from '@delon/theme';
-import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'snails-system-exceptio-list',
@@ -31,7 +30,6 @@ export class ExceptioListComponent implements OnInit {
   errorInfo: any;
 
   constructor(private http: _HttpClient,
-              private message: NzMessageService,
               private cdr: ChangeDetectorRef) {
     this.initPersonList();
   }
@@ -60,7 +58,6 @@ export class ExceptioListComponent implements OnInit {
 
     this.http.post('/exceptio/find', body, param).subscribe((res: any) => {
       this.dataOnLoading = false;
-      this.message.success('数据加载成功');
 
       if (res.status === 0) {
         this.data = res.data.content as any[];
@@ -115,7 +112,6 @@ export class ExceptioListComponent implements OnInit {
     };
 
     this.http.post('/person/find', {}, param).subscribe((res: any) => {
-      this.message.success('数据加载成功');
 
       if (res.status === 0) {
         let d = res.data.content as any[];

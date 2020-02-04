@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { _HttpClient } from '@delon/theme';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd';
 import { PersonDetailComponent } from '../detail/person-detail.component';
 
 @Component({
@@ -30,7 +30,6 @@ export class LoginListComponent implements OnInit {
   constructor(private router: Router,
               private http: _HttpClient,
               private module: NzModalService,
-              private message: NzMessageService,
               private cdr: ChangeDetectorRef) {
     this.initPersonList();
   }
@@ -57,7 +56,6 @@ export class LoginListComponent implements OnInit {
 
     this.http.post('/person/log', body, param).subscribe((res: any) => {
       this.dataOnLoading = false;
-      this.message.success('数据加载成功');
 
       if (res.status === 0) {
         this.data = res.data.content as any[];
@@ -121,7 +119,6 @@ export class LoginListComponent implements OnInit {
     };
 
     this.http.post('/person/find', {}, param).subscribe((res: any) => {
-      this.message.success('数据加载成功');
 
       if (res.status === 0) {
         let d = res.data.content as any[];
