@@ -63,6 +63,7 @@
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
     "ajv": "^6.10.2",
+    "angular2-uuid": "^1.1.1",
     "file-saver": "^2.0.2",
     "ng-zorro-antd": "^8.5.2",
     "ngx-tinymce": "^7.0.0",

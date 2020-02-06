@@ -1,0 +1,66 @@
+<nz-spin [nzSpinning]="dataOnLoading" nzTip="Loading...">
+  <div class="d-flex s-container">
+    <div class="s-left">
+      <nz-tree
+        (nzClick)="nzEvent($event)"
+        (nzExpandChange)="nzEvent($event)"
+        [nzData]="nodes"
+        nzAsyncData
+        nzShowIcon>
+      </nz-tree>
+    </div>
+    <div style="width: 5px"></div>
+    <div class="s-right">
+      <div class="toolbar">
+        <button (click)="save()" nz-button nz-tooltip nzSize="small" nzTitle="仅保存当前直系子集" nzType="default">
+          <i nz-icon nzTheme="outline" nzType="save"></i>
+          保存
+        </button>
+        <button (click)="additem()" nz-button nzSize="small" nzType="default">
+          <i nz-icon nzTheme="outline" nzType="file-add"></i>
+          新增
+        </button>
+      </div>
+      <nz-table #basicTable
+                [nzData]="listOfData"
+                [nzFrontPagination]="false"
+                [nzScroll]="nzScroll"
+                [nzShowPagination]="false"
+                [nzSize]="'small'">
+        <thead>
+        <tr>
+          <th nzWidth="200px">名称</th>
+          <th nzWidth="100px">是否有效</th>
+          <th nzWidth="100px">排序</th>
+          <th>描述</th>
+          <th [nzAlign]="'center'" nzWidth="80px">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>
+            <input [(ngModel)]="data.title" nz-input placeholder="请输入名称"/>
+          </td>
+          <td>
+            <nz-radio-group [(ngModel)]="data.enable" nzSize="small">
+              <label nz-radio nzValue="yes">是</label>
+              <label nz-radio nzValue="no">否</label>
+            </nz-radio-group>
+          </td>
+          <td>
+            <input [(ngModel)]="data.sortt" nz-input/>
+          </td>
+          <td>
+            <textarea [(ngModel)]="data.description" nz-input rows="1"></textarea>
+          </td>
+          <td class="text-center" style="color: #1890ff">
+            <i (nzOnConfirm)="delete(data.id)" class="point" nz-icon nz-popconfirm
+               nzPopconfirmPlacement="bottom" nzPopconfirmTitle="删除立即生效，并且删除其子项,是否确认删除?" nzTheme="outline"
+               nzType="delete"></i>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-spin>

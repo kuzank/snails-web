@@ -19,6 +19,71 @@ import { ArrayServiceArrToTreeNodeOptions } from '@delon/util/src/array/array.se
  */
 @Injectable()
 export class StartupService {
+  appData = {
+    'app': {
+      'name': 'Snails',
+      'description': 'Snails framework',
+    },
+    'user': {
+      'name': 'kuzank',
+      'avatar': './assets/tmp/img/avatar.jpg',
+      'email': '754109648@qq.com',
+    },
+    'menu': [
+      {
+        'text': '主导航',
+        'children': [
+          {
+            'text': '仪表盘',
+            'icon': 'anticon-dashboard',
+            'children': [
+              {
+                'text': '仪表盘',
+                'link': '/dashboard/v1',
+              },
+              {
+                'text': '用户管理',
+                'link': '/person/list',
+              },
+              {
+                'text': '组织管理',
+                'link': '/system/orgunit',
+              },
+              {
+                'text': '菜单管理',
+                'link': '/system/menu',
+              },
+              {
+                'text': '枚举管理',
+                'link': '/system/selectitem',
+              },
+              {
+                'text': '在线用户',
+                'link': '/person/online',
+              },
+              {
+                'text': '登陆日志',
+                'link': '/person/login-list',
+              },
+              {
+                'text': 'http请求',
+                'link': '/system/httplog/list',
+              },
+              {
+                'text': '系统异常',
+                'link': '/system/exceptio/list',
+              },
+              {
+                'text': '自定义图表',
+                'link': '/dashboard/v2',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+
   constructor(
     private injector: Injector,
     iconSrv: NzIconService,
@@ -33,8 +98,8 @@ export class StartupService {
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
   ) {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
-    let token = this.tokenService.get();
-    if (token && Object.keys(token).length > 0 && token['token']) {
+    const token = this.tokenService.get();
+    if (token && Object.keys(token).length > 0 && token.token) {
     } else {
       this.tokenService.set({ token: '1' });
     }
@@ -85,15 +150,15 @@ export class StartupService {
     if (401 == res.status) return;
 
     let data = res.data as any[];
-    let menuData: any[] = [];
-    let option: ArrayServiceArrToTreeNodeOptions = { parentIdMapName: 'pid' };
+    const menuData: any[] = [];
+    const option: ArrayServiceArrToTreeNodeOptions = { parentIdMapName: 'pid' };
 
     data.forEach(item => {
-      item['key'] = item['id'];
-      item['text'] = item['title'];
-      item['link'] = item['url'];
-      if (item['icon']) {
-        item['icon'] = 'anticon-' + item['icon'];
+      item.key = item.id;
+      item.text = item.title;
+      item.link = item.url;
+      if (item.icon) {
+        item.icon = 'anticon-' + item.icon;
       }
     });
     // list --> treeNode
@@ -105,66 +170,5 @@ export class StartupService {
     // 静态测试数据
     // this.menuService.add(this.appData.menu)
   }
-
-  appData = {
-    'app': {
-      'name': 'Snails',
-      'description': 'Snails framework',
-    },
-    'user': {
-      'name': 'kuzank',
-      'avatar': './assets/tmp/img/avatar.jpg',
-      'email': '754109648@qq.com',
-    },
-    'menu': [
-      {
-        'text': '主导航',
-        'children': [
-          {
-            'text': '仪表盘',
-            'icon': 'anticon-dashboard',
-            'children': [
-              {
-                'text': '仪表盘',
-                'link': '/dashboard/v1',
-              },
-              {
-                'text': '用户管理',
-                'link': '/person/list',
-              },
-              {
-                'text': '组织管理',
-                'link': '/system/orgunit',
-              },
-              {
-                'text': '菜单管理',
-                'link': '/system/menu',
-              },
-              {
-                'text': '在线用户',
-                'link': '/person/online',
-              },
-              {
-                'text': '登陆日志',
-                'link': '/person/login-list',
-              },
-              {
-                'text': 'http请求',
-                'link': '/system/httplog/list',
-              },
-              {
-                'text': '系统异常',
-                'link': '/system/exceptio/list',
-              },
-              {
-                'text': '自定义图表',
-                'link': '/dashboard/v2',
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  };
 
 }

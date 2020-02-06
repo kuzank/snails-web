@@ -1,0 +1,35 @@
+@import '~@delon/theme/styles/default';
+
+:host ::ng-deep {
+
+  .s-container {
+    height: calc(100vh - 60px);
+    padding-top: 3px;
+    background-color: #fff;
+  }
+
+  .s-left {
+    flex: 0 0 auto;
+    width: 250px;
+    border-right: 1px solid #e8e8e8;
+  }
+
+  .s-right {
+    flex: 1 1 auto;
+
+    .toolbar {
+      padding: 5px;
+    }
+  }
+
+  .ant-radio-wrapper {
+    margin-right: 0;
+
+    span.ant-radio + * {
+      padding: 0 4px;
+    }
+  }
+}
+
+
+

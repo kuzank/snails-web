@@ -6,12 +6,14 @@ import { ExceptioListComponent } from './exceptio/exceptio-list.component';
 import { OrgunitComponent } from './orgunit/orgunit.component';
 import { MenuComponent } from './menu/menu.component';
 import { MenuPermissionViewComponent } from './menu/permission-view/menu-permission-view.component';
+import { SelectitemComponent } from './selectitem/selectitem.component';
 
 const COMPONENTS = [
   ExceptioListComponent,
   HttplogListComponent,
   OrgunitComponent,
   MenuComponent,
+  SelectitemComponent
 ];
 
 const COMPONENTS_NOROUNT = [
