@@ -16,73 +16,65 @@ export class DashboardV2Component implements OnInit {
   }
 
   render1(el: ElementRef) {
-    // 开始编写 G2 代码
-    const data = [
-      { company: 'Apple', type: '整体', value: 30 },
-      { company: 'Facebook', type: '整体', value: 35 },
-      { company: 'Google', type: '整体', value: 28 },
+    fetch('https://g2.antv.vision/zh/examples/data/siteUV.json')
+      .then(res => res.json())
+      .then(data => {
+        const chart = new G2.Chart({
+          container: el.nativeElement,
+          forceFit: true,
+          height: 400,
+          padding: [20, 90, 50, 50],
+        });
+        const ds = new DataSet();
+        const dv = ds.createView().source(data);
+        dv.transform({
+          type: 'map',
+          callback: function callback(row) {
+            const times = row.Time.split(' ');
+            row.date = times[0];
+            row.time = times[1];
+            return row;
+          },
+        });
+        chart.axis('time', {
+          label: {
+            textStyle: {
+              fill: '#aaaaaa',
+            },
+          },
+        });
+        chart.axis('Count', {
+          label: {
+            textStyle: {
+              fill: '#aaaaaa',
+            },
+            formatter: text => {
+              return text.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+            },
+          },
+        });
 
-      { company: 'Apple', type: '非技术岗', value: 40 },
-      { company: 'Facebook', type: '非技术岗', value: 65 },
-      { company: 'Google', type: '非技术岗', value: 47 },
+        chart.tooltip({
+          crosshairs: false,
+        });
 
-      { company: 'Apple', type: '技术岗', value: 23 },
-      { company: 'Facebook', type: '技术岗', value: 18 },
-      { company: 'Google', type: '技术岗', value: 20 },
+        chart.legend({
+          attachLast: true,
+        });
 
-      { company: 'Apple', type: '技术岗', value: 35 },
-      { company: 'Facebook', type: '技术岗', value: 30 },
-      { company: 'Google', type: '技术岗', value: 25 },
-    ];
+        chart.source(dv, {
+          time: {
+            tickCount: 24,
+          },
+          date: {
+            type: 'cat',
+          },
+        });
 
-    const chart = new G2.Chart({
-      container: el.nativeElement,
-      forceFit: true,
-      height: 400,
-      padding: 'auto',
-    });
-    chart.source(data);
+        chart.line().position('time*Count').color('date', ['#d9d9d9', '#1890ff']);
 
-    chart.scale('value', {
-      alias: '占比（%）',
-      max: 75,
-      min: 0,
-      tickCount: 4,
-    });
-
-    chart.axis('type', {
-      label: {
-        textStyle: {
-          fill: '#aaaaaa',
-        },
-      },
-      tickLine: {
-        alignWithLabel: false,
-        length: 0,
-      },
-    });
-    chart.axis('value', {
-      label: {
-        textStyle: {
-          fill: '#aaaaaa',
-        },
-      },
-      title: {
-        offset: 50,
-      },
-    });
-
-    chart.legend({
-      position: 'top-center',
-    });
-
-    chart.interval().position('type*value').color('company')
-      .opacity(1)
-      .adjust([{
-        type: 'dodge',
-        marginRatio: 1 / 32,
-      }]);
-    chart.render();
+        chart.render();
+      });
 
   }
 
@@ -138,6 +130,93 @@ export class DashboardV2Component implements OnInit {
 
         chart.render();
       });
+  }
+
+  render3(el: ElementRef) {
+
+    let tdata = [];
+    for (let i = 1; i <= 24; i++) {
+      tdata.push({
+        type: '方案一',
+        Count: i,
+        Time: '2020/01/17 ' + i + ':00',
+      });
+      tdata.push({
+        type: '方案二',
+        Count: i + 4,
+        Time: '2020/01/17 ' + i + ':00',
+      });
+      tdata.push({
+        type: '方案三',
+        Count: i + 7,
+        Time: '2020/01/17 ' + i + ':00',
+      });
+    }
+
+    const chart = new G2.Chart({
+      container: el.nativeElement,
+      forceFit: true,
+      height: 400,
+      padding: [20, 90, 50, 50],
+    });
+    const ds = new DataSet();
+    const dv = ds.createView().source(tdata);
+    dv.transform({
+      type: 'map',
+      callback: function callback(row) {
+        const times = row.Time.split(' ');
+        row.date = times[0];
+        row.time = times[1];
+        return row;
+      },
+    });
+    chart.axis('time', {
+      label: {
+        textStyle: {
+          fill: '#aaaaaa',
+        },
+      },
+    });
+    chart.axis('Count', {
+      label: {
+        textStyle: {
+          fill: '#aaaaaa',
+        },
+        formatter: text => {
+          return text.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+        },
+      },
+    });
+
+    chart.source(dv, {
+      time: {
+        tickCount: 24,
+      },
+      date: {
+        type: 'cat',
+      },
+    });
+
+    chart.tooltip({
+      crosshairs: false,
+    });
+    chart.legend({
+      attachLast: true,
+    });
+
+    chart.line().position('time*Count').color('type', (type) => { // 通过回调函数
+      if (type === '方案一') {
+        return 'red';
+      }
+      if (type === '方案二') {
+        return 'green';
+      }
+      return 'blue';
+    });
+
+    chart.render();
+
 
   }
+
 }
