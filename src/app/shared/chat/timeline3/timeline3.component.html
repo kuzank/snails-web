@@ -1,0 +1,15 @@
+<ng-container *stringTemplateOutlet="title">
+  <div class="d-flex justify-content-between">
+    <div></div>
+    <h4>{{title}}</h4>
+    <div>
+      <a (click)="downloadImg()">
+        <code>图片</code>
+      </a>
+      <a (click)="downloadPdf()">
+        <code>pdf</code>
+      </a>
+    </div>
+  </div>
+</ng-container>
+<div #container></div>

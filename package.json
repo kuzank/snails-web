@@ -65,6 +65,7 @@
     "ajv": "^6.10.2",
     "angular2-uuid": "^1.1.1",
     "file-saver": "^2.0.2",
+    "jspdf": "^1.5.3",
     "ng-zorro-antd": "^8.5.2",
     "ngx-tinymce": "^7.0.0",
     "ngx-ueditor": "^2.1.3",
