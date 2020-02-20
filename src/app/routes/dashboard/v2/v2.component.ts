@@ -51,10 +51,10 @@ export class DashboardV2Component implements OnInit {
 
   initG2Timeline3Data3() {
     let data = [];
-    for (let i = 1; i < 29; i++) {
+    for (let i = 0; i <= 24; i++) {
       data.push({
-        x: new Date('2020-02-' + i),
-        y: Math.floor(Math.random() * 50) + 15,
+        x: (new Date('2020-02-19 00:00:00').getTime()) + (60 * 60 * 1000 * i),
+        y: Math.floor(Math.random() * 50),
       });
     }
     this.data3 = data;
