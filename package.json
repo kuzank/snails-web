@@ -5,12 +5,12 @@
   "author": "kuzank <754109648@qq.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://gitee.com/kuzan/snails-web.git"
+    "url": "git+https://gitee.com/kuzank/snails-web.git"
   },
   "bugs": {
-    "url": "https://gitee.com/kuzan/snails/issues"
+    "url": "https://gitee.com/kuzank/snails/issues"
   },
-  "homepage": "https://gitee.com/kuzan/snails",
+  "homepage": "https://gitee.com/kuzank/snails",
   "license": "MIT",
   "keywords": [
     "snails",
