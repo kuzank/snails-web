@@ -13,10 +13,14 @@ export class DashboardV2Component implements OnInit {
 
   data1 = [];
   data2 = [];
+  data3 = [];
+  data4 = [];
 
   ngOnInit() {
     this.initG2Timeline3Data1();
     this.initG2Timeline3Data2();
+    this.initG2Timeline3Data3();
+    this.initG2Timeline3Data4();
   }
 
   initG2Timeline3Data1() {
@@ -43,5 +47,27 @@ export class DashboardV2Component implements OnInit {
       });
     }
     this.data2 = data;
+  }
+
+  initG2Timeline3Data3() {
+    let data = [];
+    for (let i = 1; i < 29; i++) {
+      data.push({
+        x: new Date('2020-02-' + i),
+        y: Math.floor(Math.random() * 50) + 15,
+      });
+    }
+    this.data3 = data;
+  }
+
+  initG2Timeline3Data4() {
+    let data = [];
+    for (let i = 1; i < 29; i++) {
+      data.push({
+        x: new Date('2020-02-' + i),
+        y: Math.floor(Math.random() * 50) + 15,
+      });
+    }
+    this.data4 = data;
   }
 }

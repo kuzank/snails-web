@@ -8,20 +8,39 @@
   <div class="mb-md" nz-col nzMd="12" nzSm="12" nzXs="24">
     <g2-timeline3
       [data]="data1"
-      [height]="400"
+      [height]="300"
       [titleMap]="{y1: '方案一', y2: '方案二',y3:'方案三'}"
       padding="auto"
       position="bottom"
-      title="三种方案的三条发电成本曲线 - 24小时"></g2-timeline3>
+      title="三种方案曲线 - 24小时"></g2-timeline3>
   </div>
   <div class="mb-md" nz-col nzMd="12" nzSm="12" nzXs="24">
     <g2-timeline3
       [data]="data2"
-      [height]="400"
+      [height]="300"
       [titleMap]="{y1: '方案一', y2: '方案二',y3:'方案三'}"
       mask="DD"
       padding="auto"
       position="bottom"
-      title="三种方案的三条发电成本曲线 - 天"></g2-timeline3>
+      title="三种方案曲线 - 天"></g2-timeline3>
+  </div>
+  <div class="mb-md" nz-col nzMd="12" nzSm="12" nzXs="24">
+    <g2-timeline1
+      [data]="data3"
+      [height]="300"
+      [titleMap]="{y: '方案一'}"
+      padding="auto"
+      position="bottom"
+      title="一种方案曲线 - 24小时"></g2-timeline1>
+  </div>
+  <div class="mb-md" nz-col nzMd="12" nzSm="12" nzXs="24">
+    <g2-timeline1
+      [data]="data4"
+      [height]="300"
+      [titleMap]="{y: '方案一'}"
+      mask="DD"
+      padding="auto"
+      position="bottom"
+      title="一种方案曲线 - 天"></g2-timeline1>
   </div>
 </div>
