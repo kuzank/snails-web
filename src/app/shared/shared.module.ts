@@ -18,6 +18,7 @@ import { NgxTinymceModule } from 'ngx-tinymce';
 import { timeline3Component } from '@shared/chat/timeline3/timeline3.component';
 import { DelonUtilModule } from '@delon/util';
 import { timeline1Component } from '@shared/chat/timeline1/timeline1.component';
+import { bar3Component } from '@shared/chat/bar3/bar3.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -26,6 +27,7 @@ const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTiny
 const COMPONENTS = [
   timeline3Component,
   timeline1Component,
+  bar3Component
 ];
 const DIRECTIVES = [];
 
