@@ -200,4 +200,9 @@ export class linebarComponent implements OnInit, OnChanges, OnDestroy {
     const minWidth = data.length * 30;
     chart.axis('x', canvasWidth > minWidth).repaint();
   }
+
+  showtypeChange() {
+    this.chart.destroy();
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
+  }
 }

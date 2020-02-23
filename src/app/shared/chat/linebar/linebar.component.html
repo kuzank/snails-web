@@ -3,6 +3,11 @@
     <div></div>
     <h4>{{title}}</h4>
     <div>
+      <nz-select (ngModelChange)="showtypeChange()" [(ngModel)]="showtype" nzSize="small">
+        <nz-option nzLabel="柱状" nzValue="bar"></nz-option>
+        <nz-option nzLabel="折线" nzValue="line"></nz-option>
+        <nz-option nzLabel="线柱" nzValue="linebar"></nz-option>
+      </nz-select>
       <a (click)="downloadImg()">
         <code>图片</code>
       </a>
