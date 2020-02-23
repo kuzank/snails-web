@@ -12,8 +12,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { InputBoolean, InputNumber } from '@delon/util';
-import { fromEvent, Subscription } from 'rxjs';
-import { debounceTime, filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import * as jsPDF from 'jspdf';
 
 declare var G2: any;
@@ -28,26 +27,27 @@ export interface G2BarxData {
 }
 
 @Component({
-  selector: 'barx',
-  templateUrl: './barx.component.html',
-  host: {
-    '[style.height.px]': 'height',
-  },
+  selector: 'linebar',
+  templateUrl: './linebar.component.html',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class barxComponent implements OnInit, OnChanges, OnDestroy {
+export class linebarComponent implements OnInit, OnChanges, OnDestroy {
+
+  // #region fields
   @Input() @InputNumber() delay = 0;
   @Input() title: string | TemplateRef<void>;
 
-  // #region fields
-  @Input() @InputNumber() height = 0;
-  @Input() padding: Array<number | string> | string = 'auto';
+  @Input() showtype: 'line' | 'bar' | 'linebar' = 'bar';
+  @Input() colorsMap = {}; // G2BarxData --> z 对应的 color
+
   @Input() data: G2BarxData[] = [];
   @Input() @InputBoolean() autoLabel = true;
   @Input() position: 'top' | 'right' | 'bottom' | 'left' = 'top';
-  @Input() colorsMap = {}; // G2BarxData --> z 对应的 color
+  @Input() @InputNumber() height = 400;
+  @Input() padding: Array<number | string> | string = 'auto';
+
   private resize$: Subscription;
   private chart: any;
   @ViewChild('container', { static: true }) private node: ElementRef;
@@ -107,7 +107,7 @@ export class barxComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private install() {
-    const { node, padding, position, colorsMap } = this;
+    const { node, padding, position, colorsMap, showtype, height } = this;
 
     const container = node.nativeElement as HTMLElement;
     const chart = (this.chart = new G2.Chart({
@@ -121,12 +121,6 @@ export class barxComponent implements OnInit, OnChanges, OnDestroy {
 
     chart.scale('y', {
       alias: '占比（%）',
-    });
-
-    chart.axis('x', {
-      title: false,
-      line: false,
-      tickLine: false,
     });
 
     chart.axis('x', {
@@ -160,14 +154,26 @@ export class barxComponent implements OnInit, OnChanges, OnDestroy {
       position: position,
     });
 
-    chart.interval()
-      .position('x*y')
-      .color('z', z => colorsMap[z])
-      .opacity(1)
-      .adjust([{
-        type: 'dodge',
-        marginRatio: 1 / 32,
-      }]);
+    if (showtype == 'line') {
+      chart.line().position('x*y').color('z', z => colorsMap[z]);
+    }
+    if (showtype == 'bar') {
+      chart.interval().position('x*y').color('z', z => colorsMap[z])
+        .opacity(1)
+        .adjust([{
+          type: 'dodge',
+          marginRatio: 1 / 32,
+        }]);
+    }
+    if (showtype == 'linebar') {
+      chart.line().position('x*y').color('z', z => colorsMap[z]);
+      chart.interval().position('x*y').color('z', z => colorsMap[z])
+        .opacity(1)
+        .adjust([{
+          type: 'dodge',
+          marginRatio: 1 / 32,
+        }]);
+    }
 
     chart.render();
 
@@ -175,10 +181,11 @@ export class barxComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private attachChart() {
-    const { chart, padding, data } = this;
+
+    const { chart, height, padding, data } = this;
+
     if (!chart || !data || data.length <= 0) return;
-    this.installResizeEvent();
-    const height = this.getHeight();
+
     if (chart.get('height') !== height) {
       chart.changeHeight(height);
     }
@@ -192,16 +199,5 @@ export class barxComponent implements OnInit, OnChanges, OnDestroy {
     const canvasWidth = node.nativeElement.clientWidth;
     const minWidth = data.length * 30;
     chart.axis('x', canvasWidth > minWidth).repaint();
-  }
-
-  private installResizeEvent() {
-    if (!this.autoLabel || this.resize$) return;
-
-    this.resize$ = fromEvent(window, 'resize')
-      .pipe(
-        filter(() => this.chart),
-        debounceTime(200),
-      )
-      .subscribe(() => this.ngZone.runOutsideAngular(() => this.updatelabel()));
   }
 }

@@ -15,19 +15,15 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
 import { UEditorModule } from 'ngx-ueditor';
 import { NgxTinymceModule } from 'ngx-tinymce';
-import { timeline3Component } from '@shared/chat/timeline3/timeline3.component';
 import { DelonUtilModule } from '@delon/util';
-import { timeline1Component } from '@shared/chat/timeline1/timeline1.component';
-import { barxComponent } from '@shared/chat/barx/barx.component';
+import { linebarComponent } from '@shared/chat/linebar/linebar.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
 
 // #region your componets & directives
 const COMPONENTS = [
-  timeline3Component,
-  timeline1Component,
-  barxComponent
+  linebarComponent,
 ];
 const DIRECTIVES = [];
 

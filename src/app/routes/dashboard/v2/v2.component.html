@@ -5,52 +5,38 @@
   </h1>
 </div>
 <div nz-row nzGutter="16">
-  <div class="mb-md" nz-col nzMd="12" nzSm="12" nzXs="24">
-    <g2-timeline3
-      [data]="data1"
-      [height]="250"
-      [titleMap]="{y1: '方案一', y2: '方案二',y3:'方案三'}"
-      padding="auto"
-      position="bottom"
-      title="三种方案曲线 - 24小时"></g2-timeline3>
+
+  <div class="mb-md" nz-col nzMd="8" nzSm="8" nzXs="24">
+    <linebar [colorsMap]="colorMap" [data]="data1" [height]="200" [title]="'一种方案 - 柱状图'" showtype="bar"></linebar>
   </div>
-  <div class="mb-md" nz-col nzMd="12" nzSm="12" nzXs="24">
-    <g2-timeline3
-      [data]="data2"
-      [height]="250"
-      [titleMap]="{y1: '方案一', y2: '方案二',y3:'方案三'}"
-      mask="DD"
-      padding="auto"
-      position="bottom"
-      title="三种方案曲线 - 天"></g2-timeline3>
+  <div class="mb-md" nz-col nzMd="8" nzSm="8" nzXs="24">
+    <linebar [colorsMap]="colorMap" [data]="data1" [height]="200" [title]="'一种方案 - 折线图'" showtype="line"></linebar>
+  </div>
+  <div class="mb-md" nz-col nzMd="8" nzSm="8" nzXs="24">
+    <linebar [colorsMap]="colorMap" [data]="data1" [height]="200" [title]="'一种方案 - linebar'" showtype="linebar"></linebar>
   </div>
 
-
-  <div class="mb-md" nz-col nzMd="12" nzSm="12" nzXs="24">
-    <g2-timeline1
-      [data]="data3"
-      [height]="250"
-      [titleMap]="{y: '方案一'}"
-      padding="auto"
-      position="bottom"
-      title="一种方案曲线 - 24小时"></g2-timeline1>
+  <div class="mb-md" nz-col nzMd="8" nzSm="8" nzXs="24">
+    <linebar [colorsMap]="colorMap" [data]="data2" [height]="200" [title]="'二种方案 - 柱状图'" showtype="bar"></linebar>
   </div>
-  <div class="mb-md" nz-col nzMd="12" nzSm="12" nzXs="24">
-    <g2-timeline1
-      [data]="data4"
-      [height]="250"
-      [titleMap]="{y: '方案一'}"
-      mask="DD"
-      padding="auto"
-      position="bottom"
-      title="一种方案曲线 - 天"></g2-timeline1>
+  <div class="mb-md" nz-col nzMd="8" nzSm="8" nzXs="24">
+    <linebar [colorsMap]="colorMap" [data]="data2" [height]="200" [title]="'二种方案 - 折线图'" showtype="line"></linebar>
+  </div>
+  <div class="mb-md" nz-col nzMd="8" nzSm="8" nzXs="24">
+    <linebar [colorsMap]="colorMap" [data]="data2" [height]="200" [title]="'二种方案 - linebar'" showtype="linebar"></linebar>
   </div>
 
-
   <div class="mb-md" nz-col nzMd="12" nzSm="12" nzXs="24">
-    <barx [data]="data5" [height]="250" [title]="'四种方案曲线 - 24小时'"></barx>
+    <linebar [colorsMap]="colorMap" [data]="data3" [height]="200" [title]="'三种方案 - 柱状图'" showtype="bar"></linebar>
   </div>
   <div class="mb-md" nz-col nzMd="12" nzSm="12" nzXs="24">
-    <barx [colorsMap]="colorMap" [data]="data6" [height]="250" [title]="'四种方案曲线 - 天'"></barx>
+    <linebar [colorsMap]="colorMap" [data]="data3" [height]="200" [title]="'三种方案 - 折线图'" showtype="line"></linebar>
+  </div>
+
+  <div class="mb-md" nz-col nzMd="12" nzSm="12" nzXs="24">
+    <linebar [colorsMap]="colorMap" [data]="data4" [height]="200" [title]="'四种方案 - 柱状图'" showtype="bar"></linebar>
+  </div>
+  <div class="mb-md" nz-col nzMd="12" nzSm="12" nzXs="24">
+    <linebar [colorsMap]="colorMap" [data]="data4" [height]="200" [title]="'四种方案 - 折线图'" showtype="line"></linebar>
   </div>
 </div>
