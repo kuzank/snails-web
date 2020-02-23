@@ -19,16 +19,17 @@ import * as jsPDF from 'jspdf';
 declare var G2: any;
 const TITLE_HEIGHT = 41;
 
-export interface G2BarData {
+export interface G2BarxData {
   x: any;
   y: any;
+  z: any;
 
   [key: string]: any;
 }
 
 @Component({
-  selector: 'bar3',
-  templateUrl: './bar3.component.html',
+  selector: 'barx',
+  templateUrl: './barx.component.html',
   host: {
     '[style.height.px]': 'height',
   },
@@ -36,17 +37,17 @@ export interface G2BarData {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class bar3Component implements OnInit, OnChanges, OnDestroy {
+export class barxComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputNumber() delay = 0;
   @Input() title: string | TemplateRef<void>;
-  @Input() color = 'rgba(24, 144, 255, 0.85)';
 
   // #region fields
   @Input() @InputNumber() height = 0;
   @Input() padding: Array<number | string> | string = 'auto';
-  @Input() data: G2BarData[] = [];
+  @Input() data: G2BarxData[] = [];
   @Input() @InputBoolean() autoLabel = true;
-  colors = ['#1890FF', '#2FC25B', '#c28274'];
+  @Input() position: 'top' | 'right' | 'bottom' | 'left' = 'top';
+  @Input() colorsMap = {}; // G2BarxData --> z 对应的 color
   private resize$: Subscription;
   private chart: any;
   @ViewChild('container', { static: true }) private node: ElementRef;
@@ -57,6 +58,21 @@ export class bar3Component implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
+
+    let z = [];
+    if (Object.keys(this.colorsMap).length == 0) {
+      // 若没有配置 colorMap ，则使用以下默认颜色
+      let colors = ['#1890FF', '#2FC25B', '#c28274', '#FFD700', '#DDA0DD'];
+      this.data.forEach(item => {
+        if (z.indexOf(item.z) == -1) {
+          z.push(item.z);
+        }
+      });
+      z.forEach((item, idx) => {
+        this.colorsMap[item] = colors[idx];
+      });
+    }
+
     this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 
@@ -91,7 +107,7 @@ export class bar3Component implements OnInit, OnChanges, OnDestroy {
   }
 
   private install() {
-    const { node, padding } = this;
+    const { node, padding, position, colorsMap } = this;
 
     const container = node.nativeElement as HTMLElement;
     const chart = (this.chart = new G2.Chart({
@@ -141,9 +157,12 @@ export class bar3Component implements OnInit, OnChanges, OnDestroy {
     });
 
     chart.legend({
-      position: 'top-center',
+      position: position,
     });
-    chart.interval().position('x*y').color('z')
+
+    chart.interval()
+      .position('x*y')
+      .color('z', z => colorsMap[z])
       .opacity(1)
       .adjust([{
         type: 'dodge',
@@ -156,15 +175,13 @@ export class bar3Component implements OnInit, OnChanges, OnDestroy {
   }
 
   private attachChart() {
-    const { chart, padding, data, color } = this;
+    const { chart, padding, data } = this;
     if (!chart || !data || data.length <= 0) return;
     this.installResizeEvent();
     const height = this.getHeight();
     if (chart.get('height') !== height) {
       chart.changeHeight(height);
     }
-    // color
-    // chart.get('geoms')[0].color(color);
     chart.set('padding', padding);
 
     chart.changeData(data);

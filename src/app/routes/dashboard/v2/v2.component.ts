@@ -76,6 +76,13 @@ export class DashboardV2Component implements OnInit {
     this.data4 = data;
   }
 
+  colorMap = {
+    '方案一': '#2FC25B',
+    '方案二': '#c28274',
+    '方案三': '#FFD700',
+    '方案四': '#DDA0DD',
+  };
+
   initBar3Data5() {
     let data = [];
     for (let i = 1; i < 25; i++) {
@@ -93,6 +100,11 @@ export class DashboardV2Component implements OnInit {
         x: i + ':00',
         y: Math.floor(Math.random() * 100),
         z: '方案三',
+      });
+      data.push({
+        x: i + ':00',
+        y: Math.floor(Math.random() * 100),
+        z: '方案四',
       });
     }
     this.data5 = data;
@@ -115,6 +127,11 @@ export class DashboardV2Component implements OnInit {
         x: i + '号',
         y: Math.floor(Math.random() * 100),
         z: '方案三',
+      });
+      data.push({
+        x: i + '号',
+        y: Math.floor(Math.random() * 100),
+        z: '方案四',
       });
     }
     this.data6 = data;
