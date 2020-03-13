@@ -11,7 +11,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { InputBoolean, InputNumber } from '@delon/util';
+import { deepCopy, InputBoolean, InputNumber } from '@delon/util';
 import { Subscription } from 'rxjs';
 import * as jsPDF from 'jspdf';
 
@@ -80,34 +80,8 @@ export class linebarComponent implements OnInit, OnChanges, OnDestroy {
     this.ngZone.runOutsideAngular(() => this.attachChart());
   }
 
-  ngOnDestroy(): void {
-    if (this.resize$) {
-      this.resize$.unsubscribe();
-    }
-    if (this.chart) {
-      this.ngZone.runOutsideAngular(() => this.chart.destroy());
-    }
-  }
-
-  downloadImg(name?: string) {
-    let title = (name ? name : (this.title ? this.title : '图片')) + '_' + new Date().getTime().toString();
-    this.chart.downloadImage(title);
-  }
-
-  downloadPdf(name?: string) {
-    let imgData = this.chart.toDataURL();
-    var doc = new jsPDF();
-    doc.addImage(imgData, 1, 1, 200, 100);
-    let title = (name ? name : (this.title ? this.title : '图片')) + '_' + new Date().getTime().toString();
-    doc.save(title + '.pdf');
-  }
-
-  private getHeight() {
-    return this.title ? this.height - TITLE_HEIGHT : this.height;
-  }
-
   private install() {
-    const { node, padding, position, colorsMap, showtype, height } = this;
+    const { node, padding, position, colorsMap, showtype } = this;
 
     const container = node.nativeElement as HTMLElement;
     const chart = (this.chart = new G2.Chart({
@@ -186,6 +160,27 @@ export class linebarComponent implements OnInit, OnChanges, OnDestroy {
 
     if (!chart || !data || data.length <= 0) return;
 
+    let _data = deepCopy(data);
+    let _min = 0;
+    if (data && data.length > 0) {
+      _data = _data.sort((a, b) => a.y - b.y);
+      if (_data[0]['y'] < 0) {
+        _min = _data[0]['y'];
+      }
+    }
+
+    if (_min < 0) {
+      chart.source([], {
+        x: {
+          type: 'cat',
+        },
+        y: {
+          min: _min,
+          max: 0,
+        },
+      });
+    }
+
     if (chart.get('height') !== height) {
       chart.changeHeight(height);
     }
@@ -201,8 +196,34 @@ export class linebarComponent implements OnInit, OnChanges, OnDestroy {
     chart.axis('x', canvasWidth > minWidth).repaint();
   }
 
+  private getHeight() {
+    return this.title ? this.height - TITLE_HEIGHT : this.height;
+  }
+
   showtypeChange() {
     this.chart.destroy();
     this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
+  }
+
+  downloadImg(name?: string) {
+    let title = (name ? name : (this.title ? this.title : '图片')) + '_' + new Date().getTime().toString();
+    this.chart.downloadImage(title);
+  }
+
+  downloadPdf(name?: string) {
+    let imgData = this.chart.toDataURL();
+    var doc = new jsPDF();
+    doc.addImage(imgData, 1, 1, 200, 100);
+    let title = (name ? name : (this.title ? this.title : '图片')) + '_' + new Date().getTime().toString();
+    doc.save(title + '.pdf');
+  }
+
+  ngOnDestroy(): void {
+    if (this.resize$) {
+      this.resize$.unsubscribe();
+    }
+    if (this.chart) {
+      this.ngZone.runOutsideAngular(() => this.chart.destroy());
+    }
   }
 }
